@@ -21,11 +21,6 @@ import java.util.Date;
 @Table(name = "houses")
 public class House {
 
-    //@Id
-    //private String houseId;
-   // @EmbeddedId
-   // private HouseEmbeddedKey houseEmbeddedKey;
-
     @Id
     private String houseId;
     @Column
