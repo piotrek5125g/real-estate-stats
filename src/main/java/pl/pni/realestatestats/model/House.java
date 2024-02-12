@@ -21,6 +21,11 @@ import java.util.Date;
 @Table(name = "houses")
 public class House {
 
+    //@Id
+    //private String houseId;
+   // @EmbeddedId
+   // private HouseEmbeddedKey houseEmbeddedKey;
+
     @Id
     private String houseId;
     @Column
@@ -35,7 +40,7 @@ public class House {
     private Date addedDate;
 
     @ManyToOne
-    @JoinColumn(name="region_id", nullable=false)
+    @JoinColumn(name="region_id", referencedColumnName = "regionId", nullable=false)
     private Region region;
 
 }

@@ -1,0 +1,29 @@
+{
+  "totalPages":3,
+  "data":[
+    {
+      "id":"test-1",
+      "type":"detached_house",
+      "price":"760332.99",
+      "description":"A really nice house you should buy it",
+      "area":"120",
+      "rooms":4
+    },
+    {
+      "id":"test-2",
+      "type":"flat",
+      "price":"490534",
+      "description":"Live your dreams",
+      "area":"44.5",
+      "rooms":2
+    },
+    {
+      "id":"test-3",
+      "type":"flat",
+      "price":"540534",
+      "description":"A space for you and your universe",
+      "area":"70.34",
+      "rooms":3
+    }
+  ]
+}

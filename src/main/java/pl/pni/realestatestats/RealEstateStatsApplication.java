@@ -1,15 +1,22 @@
 package pl.pni.realestatestats;
 
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import pl.pni.realestatestats.constants.SearchOperation;
 import pl.pni.realestatestats.repository.HouseRepository;
 import pl.pni.realestatestats.repository.RegionRepository;
+import pl.pni.realestatestats.service.ExternalApiService;
+import pl.pni.realestatestats.service.RealEstateDBUpdateService;
+import pl.pni.realestatestats.specification.HouseSearchCriteria;
+import pl.pni.realestatestats.specification.HouseSpecification;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 @EnableScheduling
@@ -18,7 +25,6 @@ public class RealEstateStatsApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(RealEstateStatsApplication.class, args);
 	}
-	//WireMockServer wireMockServer;
 
 	@Autowired
 	RegionRepository rr;
@@ -29,25 +35,59 @@ public class RealEstateStatsApplication implements CommandLineRunner {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	@Autowired
+	private RealEstateDBUpdateService realEstateDBUpdateService;
+
+	@Autowired
+	private ExternalApiService externalApiService;
+
+	@Value("${external.api.base.url}")
+	private String baseUrl;
+
 	@Override
 	public void run(String... args) throws Exception {
-		
+//		HouseSpecification specification = new HouseSpecification();
+//		List<String> typesAsList = List.of("flat","xxx");
+//
+//		LocalDateTime l1 = LocalDateTime.of(2010,1,1,1,1);
+//		LocalDateTime l2 = LocalDateTime.of(2030,1,1,1,1);
+//		specification.add(new HouseSearchCriteria("size","M", SearchOperation.EQUAL));
+//		specification.add(new HouseSearchCriteria("type",List.of("flat","xxx"), SearchOperation.IN));
+//		specification.add(new HouseSearchCriteria("addedDate",l2, SearchOperation.LESS_THAN_EQUAL));
+//		specification.add(new HouseSearchCriteria("region", rr.findById("SL_PN").orElseThrow() , SearchOperation.EQUAL));
+//
+//
+//		System.out.println("houses: " + houseRepository.findAll(specification).size());
 
-//		List<String> regionHousesInDb =
-//				houseRepository.findHouseIdsByRegion(rr.findById("DLN_WROC_PC").orElseThrow());
-//
-//		System.out.println("contains " + regionHousesInDb.contains("test-0"));
-//		System.out.println("contains2 " + regionHousesInDb.contains("test-1111"));
+		//System.out.println("example houses: " + houseRepository.findAll(example).size());
 
-		//System.out.println("next: " + regionHousesInDb.iterator().next());
-//		List<String> types = List.of("flat","detached_house");
+//		WireMockServer wireMockServer = new WireMockServer( 8090);
+//		wireMockServer.start();
 //
-//		LocalDateTime from = LocalDateTime.of(2010,10,10,0,0);
-//		LocalDateTime to = LocalDateTime.of(2045,10,10,0,0);
+//		wireMockServer.stubFor(WireMock.get(urlPathMatching("/api/real-estates/.*"))
+//				.willReturn(aResponse().withBodyFile("realestate.json")));
+
+		//realEstateDBUpdateService.performRealEstateDBUpdateProcedure();
+	//	externalApiService.doTest();
+
+//		WebClient client = WebClient.builder()
+//				.baseUrl(baseUrl)
+//				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//				.build();
 //
-//		System.out.println(
-//				houseRepository.findAvgPrice(rr.findById("SL_PN").orElseThrow(), "M",3, types, from , to)
-//		);
+//		String rs = client.get()
+//				.uri(uriBuilder -> uriBuilder
+//						.path("/api/real-estates/{region}")
+//						.queryParam("page", 1)
+//						.build("SL_POL"))
+//				.retrieve().bodyToMono(String.class).block();
+//
+//		ObjectMapper mapper = new ObjectMapper();
+//		ExternalApiResponse ers = mapper.readValue(rs, ExternalApiResponse.class);
+//
+//		System.out.println(ers.getTotalPages());
+
+
 
 //		String[] sizes= new String[] {"S","M","L"};
 //
@@ -64,30 +104,7 @@ public class RealEstateStatsApplication implements CommandLineRunner {
 //			houseRepository.save(house);
 //		}
 
-//		System.out.println(rr.findAll());
-//		WireMockServer wireMockServer = new WireMockServer( 8090);
-//		wireMockServer.start();
-//
-//		wireMockServer.stubFor(WireMock.get("/api/real-estates/SL_POL?page=1")
-//				.willReturn(aResponse().withBodyFile("realestate.json")));
-//
-//		WebClient client = WebClient.builder()
-//				.baseUrl("http://localhost:8090")
-//				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//				.build();
-//
-//		String rs = client.get()
-//				.uri(uriBuilder -> uriBuilder
-//						.path("/api/real-estates/{region}")
-//						.queryParam("page", 1)
-//						.build("SL_POL"))
-//				.retrieve().bodyToMono(String.class).block();
-//
-//		ObjectMapper mapper = new ObjectMapper();
-//		ExternalApiResponse ers = mapper.readValue(rs, ExternalApiResponse.class);
-//
-//		System.out.println(ers.getTotalPages());
-//		System.out.println(ers.getData().get(0).getType());
+
 	}
 
 }

@@ -54,17 +54,13 @@
 			<artifactId>wiremock</artifactId>
 			<version>3.3.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-
-		<!--		<dependency>
-                    <groupId>com.github.tomakehurst</groupId>
-                    <artifactId>wiremock-standalone</artifactId>
-                    <version>3.0.1</version>
-                    <type>pom</type>
-                    <scope>test</scope>
-                </dependency>
-        -->
-            </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -76,21 +72,22 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <excludes>
-                                <exclude>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
 
-        </project>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

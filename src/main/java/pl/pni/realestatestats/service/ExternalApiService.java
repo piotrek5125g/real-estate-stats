@@ -2,6 +2,7 @@ package pl.pni.realestatestats.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +13,6 @@ import pl.pni.realestatestats.model.external.ExternalApiResponse;
 import pl.pni.realestatestats.model.external.HouseExternal;
 import reactor.util.retry.Retry;
 
-import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -31,7 +31,10 @@ public class ExternalApiService {
 
     public ExternalApiService(EmailSenderService emailSenderService) {
         this.emailSenderService = emailSenderService;
+    }
 
+    @PostConstruct
+    public void init() {
         webClient = WebClient
                 .builder()
                 .baseUrl(baseUrl)
@@ -47,7 +50,7 @@ public class ExternalApiService {
                         .build(regionId))
                 .retrieve()
                 .bodyToMono(String.class)
-                .retryWhen(Retry.backoff(maxRetry, Duration.ofSeconds(2))
+                .retryWhen(Retry.max(maxRetry)
                         .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -> {
                             emailSenderService.sendErrorEmailToAdministrator("External Api connection error",
                                     "The application could not connect to real estate API after max retry attempts");

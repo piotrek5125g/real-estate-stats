@@ -15,6 +15,14 @@ import java.util.Set;
 @Entity
 @Table(name = "regions")
 public class Region {
+    public Region(){
+
+    }
+
+    public Region(String regionId, String regionName) {
+        this.regionId = regionId;
+        this.regionName = regionName;
+    }
 
     @Id
     private String regionId;
