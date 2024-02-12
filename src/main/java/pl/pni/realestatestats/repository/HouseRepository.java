@@ -15,6 +15,8 @@ public interface HouseRepository extends JpaRepository<House, Long>, JpaSpecific
     @Query("SELECT h.houseId FROM House h WHERE h.region= :regionId")
     List<String> findHouseIdsByRegion(Region regionId);
 
+    House findByHouseId(String houseId);
+
 //    @Query("SELECT AVG(h.price) FROM House h WHERE h.size= :size and h.region= :regionId " +
 //            "and h.rooms= :rooms and h.type IN(:types) and h.addedDate BETWEEN :dateFrom AND :dateTo")
 //    Double findAvgPrice(@Param("regionId") Region regionId, @Param("size") String size,
